@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito - Roses.</title>
+    <link rel="icon" href="./assets/favicon-32x32.png" type="image/x-icon" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <style>
+        body {
+            background: linear-gradient(to bottom, #fce4ec, #ffffff);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="../../index.html">Roses.</a>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="./src/components/features.html">Shop!</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./src/components/about.html">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./src/components/contact.html">Contact</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./components/cart.html" id="cart-link">Cart (<span id="cart-count">0</span>)</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container my-5">
+        <h1>Tu Carrito</h1>
+        <div id="cart-items" class="list-group">
+            <!-- Los productos del carrito se agregarán aquí dinámicamente -->
+        </div>
+        <button id="checkout-btn" class="btn btn-success mt-3">Proceder a la compra</button>
+    </div>
+
+    <footer class="footer bg-light py-3">
+        <div class="container">
+            <span class="text-muted">&copy; 2024 Roses. Todos los derechos reservados.</span>
+        </div>
+    </footer>
+
+    <script>
+        // Función para mostrar los productos en el carrito
+        function displayCartItems() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartItemsContainer = document.getElementById('cart-items');
+            cartItemsContainer.innerHTML = ''; // Limpiar el contenido actual
+
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<li class="list-group-item">Tu carrito está vacío.</li>';
+            } else {
+                cart.forEach(item => {
+                    let listItem = document.createElement('li');
+                    listItem.className = 'list-group-item';
+                    listItem.textContent = item;
+                    cartItemsContainer.appendChild(listItem);
+                });
+            }
+        }
+
+        // Actualiza el contador del carrito en la navbar
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
+        // Proceder a la compra (puedes añadir lógica adicional aquí)
+        document.getElementById('checkout-btn').onclick = function() {
+            alert('Gracias por tu compra!');
+            localStorage.removeItem('cart'); // Limpiar el carrito después de la compra
+            displayCartItems(); // Actualizar la visualización
+            updateCartCount(); // Actualizar el contador
+        };
+
+        // Ejecutar funciones al cargar la página
+        window.onload = function() {
+            displayCartItems();
+            updateCartCount();
+        };
+    </script>
+</body>
+</html>
